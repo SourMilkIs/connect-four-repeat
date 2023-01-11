@@ -7,4 +7,4 @@ The welcome process ensures that players understand the instructions and allows 
 
 INSTALLATION:
 1. Download main.py
-2. Open main.py in the terminal or a (python) IDE.
+2. Open connect_four.py in the terminal or a (python) IDE.
