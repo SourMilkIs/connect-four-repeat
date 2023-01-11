@@ -6,7 +6,11 @@ Players take turns dropping their character pieces into a column, and the first 
 The welcome process ensures that players understand the instructions and allows them to share their pronouns and pick their characters (◔◡◔ or ಠ_ಠ). Players have the option to swap characters with their corresponding pronouns and scores.
 
 INSTALLATION:
-1. Download connect_four.py
-2. Open connect_four.py in the terminal
-    a) cd [path to directory]
-    b) python connect_four.py
+Download connect_four.py
+1. Click "Code"
+2. Click "Download ZIP"
+3. Extract .zip file
+
+Open connect_four.py in the terminal
+1. cd [path to directory]
+2. python connect_four.py
