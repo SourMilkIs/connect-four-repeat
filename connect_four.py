@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-@author: furry
+@author: SourMilkIs
 """
 
 def make_board():
