@@ -5,7 +5,7 @@
 
 def make_board():
   border=["❅"]
-  mid=["⍣"]
+  mid=["❅"]
   board=[]
   col=1
   #making borders
@@ -39,7 +39,7 @@ def make_board():
   return board
 #######
 def instruct_me():
-  print("No worries! \nBasically, two players will take turn dropping their pieces into a valid column--one that has not yet been filled to the top. The player who first achieves four of their pieces in a row--horizontally, vertically, or diagonally--will be the winner!")
+  print("No worries! \nBasically, two players will take turn dropping their pieces into a valid column (one that has not been filled to the top yet). The first player who achieves four pieces in a row (horizontally, vertically, or diagonally) will be the winner!")
 def invalid_ans():
   print("Sorry, that was not a valid response. Please answer me again.")
 def pronoun_me(_player):
@@ -214,6 +214,7 @@ class Player():
     other.pronoun=temp[1]
     other.score=temp[2]
     return self,other
+#######
 class ConnectFour(Player):
   def _init_(self,player1,player2,board):
     self.player1=player1
@@ -265,65 +266,67 @@ class ConnectFour(Player):
       if board[4*i+57]==" ":
         return False
     return True
-
+  def update_score(self,cont,player1,player2):
+    while(cont != "winner" and cont != "exit"):
+      cont = self.select(player1.name,player1.pronoun)
+      if cont == "winner":
+        player1.score += 1
+        self.show_score()
+        print("Player", player1.name, "has won!")
+        break
+      elif cont == "exit":
+        player2.score += 1
+        self.show_score()
+        print("Player", player1.name, "has surrendered!")
+        print("Player", player2.name, "has won!")
+        break
+      cont = self.select(player2.name,player2.pronoun)
+      if cont == "winner":
+        player2.score += 1
+        self.show_score()
+        print("Player", player2.name, "has won!")
+        break
+      elif cont == "exit":
+        player1.score1 += 1
+        self.show_score()
+        print("Player", player2.name, "has surrendered!")
+        print("Player", player1.name, "has won!")
+        break
+      if (self.is_tie(self.imboard)):
+        print("This is a tie!")
+        self.show_score()
+        break
+#######
 class BeginGame(ConnectFour):
   welcome = welcome_me()
   def __init__(self):
     self.player1 = Player("","",0)
     self.player2 = Player("","",0)
-    repeat = True
-    while (repeat):
-      cont = ""
-      self.imboard = make_board()
-      name1,name2 = first_player()
-      if self.player1.name == "":
-        self.player1.name,self.player2.name = name1,name2
-        self.player1.pronoun,self.player2.pronoun = pronoun_me(self.player1.name),pronoun_me(self.player2.name)
-      elif self.player1.name == name2:
-        self.player1,self.player2 = self.player1.swap(self.player2)
-      print("Ok! We can get started now. \nReminder: A player can quit anytime by entering X instead of a column number, but the point for that round goes to the other player.")
-      while(cont != "winner" and cont != "exit"):
-        cont = super().select(self.player1.name,self.player1.pronoun)
-        if cont == "winner":
-          self.player1.score += 1
-          self.show_score()
-          print("Player", self.player1.name, "has won!")
-          break
-        elif cont == "exit":
-          self.player2.score += 1
-          self.show_score()
-          print("Player", self.player1.name, "has surrendered!")
-          print("Player", self.player2.name, "has won!")
-          break
-        cont = super().select(self.player2.name,self.player2.pronoun)
-        if cont == True:
-          self.player2.score += 1
-          self.show_score()
-          print("Player", self.player2.name, "has won!")
-          break
-        elif cont == "exit":
-          self.player1.score1 += 1
-          self.show_score()
-          print("Player", self.player2.name, "has surrendered!")
-          print("Player", self.player1.name, "has won!")
-          break
-        if (self.is_tie(self.imboard)):
-          print("This is a tie!")
-          self.show_score()
-          break
-      more=""
-      while(more != "a" and more != "b"):
-        more = input("Would you like to play again? \n[a] Yes! \n[b] No thanks, I'm good for the day. \n")
-        if more == "a":
-          print("Yay! I'm excited to have you here for a bit longer! (o´〰`o)♡ ")
-        elif more == "b":
-          print("Thank you for playing! Hope to see you again soon!")
-          repeat = False
-        else:
-          invalid_ans()
-      
+    self.repeat = True
+    while (self.repeat):
+        cont = ""
+        self.imboard = make_board()
+        self.first_play(self.player1,self.player2)
+        super().update_score(cont,self.player1,self.player2)
+        self.another_one()
+  def first_play(self,player1,player2):
+    name1,name2 = first_player()
+    if player1.name == "":
+      player1.name,player2.name = name1,name2
+      player1.pronoun,player2.pronoun = pronoun_me(player1.name),pronoun_me(player2.name)
+    elif player1.name == name2:
+      player1,player2 = player1.swap(player2)
+    print("Ok! We can get started now. \nReminder: A player can quit anytime by entering X instead of a column number, but the point for that round goes to the other player.")
+  def another_one(self):
+    more=""
+    while(more != "a" and more != "b"):
+      more = input("Would you like to play again? \n[a] Yes! \n[b] No thanks, I'm good for the day. \n")
+      if more == "a":
+        print("Yay! I'm excited to have you here for a bit longer! (o´〰`o)♡ ")
+      elif more == "b":
+        print("Thank you for playing! Hope to see you again soon!")
+        self.repeat = False
+      else:
+        invalid_ans()
+
 gameboard = BeginGame()
-
-
-
-
