@@ -253,7 +253,6 @@ class ConnectFour(Player):
         self.imboard[slot+1]=player[2]   
         print("Piece was successfully placed!\n")
         cont=(check_over(player[1],self.imboard,int(slot/60),col))
-        print(cont)
         if cont==True:
           self.show()
           return "winner"
