@@ -13,5 +13,5 @@ Download connect_four.py
 3. Extract .zip file
 
 Open connect_four.py in the terminal
-1. cd [path to directory]
+1. cd [directory path to connect_four.py]
 2. python connect_four.py
